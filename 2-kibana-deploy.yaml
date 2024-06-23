@@ -1,0 +1,34 @@
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: quickstart
+  namespace: elastic-system
+spec:
+  version: 8.13.4
+  count: 1
+  config:
+    elasticsearch.hosts: https://quickstart-es-http:9200
+    elasticsearch.ssl.certificateAuthorities: /etc/ssl/ca.crt
+    elasticsearch.serviceAccountToken: AAEAAWVsYXN0aWMva2liYW5hL3F1aWNrc3RhcnQ6cC0yRGJOWlZUaTY5ejN5U1kwcjd6dw
+    enterpriseSearch.host: https://quickstart-ent-http:3002
+    enterpriseSearch.ssl.verificationMode: none
+    server.publicBaseUrl: https://kibana.my.laptop
+    server.maxPayload: 524288000
+    logging.root.level: debug
+    xpack.fleet.packages:
+    - name: apm
+      version: latest
+  secureSettings:
+    - secretName: kibana-elasticsearch-credentials
+  podTemplate:
+    spec:
+      containers:
+        - name: kibana
+          volumeMounts:
+            - mountPath: /etc/ssl/
+              name: elasticsearch-certs
+              readOnly: true
+      volumes:
+        - name: elasticsearch-certs
+          secret:
+            secretName: quickstart-es-http-certs-public

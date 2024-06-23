@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+  name: elastic
+  namespace: elastic-system
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: elastic.my.laptop
+    http:
+      paths:
+      - backend:
+          service:
+            name: quickstart-es-http
+            port:
+              number: 9200
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - elastic.my.laptop
+    secretName: elastic-my-laptop-tls

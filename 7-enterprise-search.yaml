@@ -1,0 +1,36 @@
+apiVersion: enterprisesearch.k8s.elastic.co/v1
+kind: EnterpriseSearch
+metadata:
+  name: quickstart
+  namespace: elastic-system
+spec:
+  version: 8.13.4
+  count: 1
+  elasticsearchRef:
+    name: quickstart
+  config:
+    ent_search.external_url: https://enterprise-search.my.laptop
+    kibana.host: https://quickstart-kb-http:5601
+    app_search.engine.document_size.limit: 100kb
+    elasticsearch.username: elastic
+    elasticsearch.password: rQwUBXK7NZx6202w895Hw40C
+    elasticsearch.ssl.enabled: true
+    elasticsearch.ssl.certificate_authority: /etc/ssl/elasticsearch/ca.crt
+  podTemplate:
+    spec:
+      containers:
+        - name: enterprise-search
+          volumeMounts:
+            - mountPath: /etc/ssl/elasticsearch
+              name: elasticsearch-certs
+              readOnly: true
+            - mountPath: /etc/ssl/kibana
+              name: kibana-certs
+              readOnly: true
+      volumes:
+        - name: elasticsearch-certs
+          secret:
+            secretName: quickstart-es-http-certs-public
+        - name: kibana-certs
+          secret:
+            secretName: quickstart-kb-http-certs-public 

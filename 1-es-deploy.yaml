@@ -1,0 +1,73 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: quickstart
+  namespace: elastic-system
+spec:
+  version: 8.13.4
+  nodeSets:
+  - config:
+      node.roles:
+      - master
+      - ingest
+      node.store.allow_mmap: false
+      xpack.ml.enabled: true
+      xpack.security.authc:
+        anonymous:
+          authz_exception: true
+          roles: admin
+          username: anonymous_user
+    count: 1
+    name: master-nodes
+    volumeClaimTemplates:
+    - metadata:
+        name: elasticsearch-data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: microk8s-hostpath
+  - config:
+      node.roles:
+      - data
+      node.store.allow_mmap: false
+    count: 2
+    name: data-nodes
+    volumeClaimTemplates:
+    - metadata:
+        name: elasticsearch-data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 20Gi
+        storageClassName: microk8s-hostpath
+  - config:
+      node.roles:
+      - ml
+      node.store.allow_mmap: false
+    count: 1
+    name: ml-nodes
+    podTemplate:
+      spec:
+        containers:
+        - name: elasticsearch
+          resources:
+            limits:
+              memory: 8Gi
+            requests:
+              memory: 8Gi
+    volumeClaimTemplates:
+    - metadata:
+        name: elasticsearch-data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 20Gi
+          limits:
+        storageClassName: microk8s-hostpath
