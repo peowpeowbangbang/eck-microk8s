@@ -1,6 +1,4 @@
-#### Pre-requisite
 
-I installed microk8s in a MacBook Pro M3 Pro with 36GB, running Sonoma 14.5
 
 #### Note for Kibana
 - Kibana might fail if the elastic username and password is wrong. use the get_username.sh to get the password from the secret.
@@ -12,7 +10,11 @@ I installed microk8s in a MacBook Pro M3 Pro with 36GB, running Sonoma 14.5
 - It is configued to allow more than 100MB of data by using annotations that is defined by the NGINX manual.
 #### Note for the certificates
 - You will have to generate a self-signed certificate, make sure you don't lose this. 
-  
+
+
+#### Pre-requisite
+
+I installed microk8s in a MacBook Pro M3 Pro with 36GB, running Sonoma 14.5
 
 1. microk8s installed in MacOS with the following spec:
 ```
