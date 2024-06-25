@@ -54,5 +54,5 @@ addons:
    https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-deploy-eck.html
 6. clone this repo using git then ```cd eck-microk8s```
 7. create an elastic-system namespace ```microk8s kubectl create ns elastic-system```
-8. apply the numbered yaml one by one in order. Excep for the shell file that you will have to run in the bash prompt
+8. apply the numbered yaml one by one in order. Except for the shell file that you will have to run in the bash prompt
     ```microk8s kubectl -n elastic-system apply -f 1-es-deploy.yaml```
