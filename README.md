@@ -2,6 +2,8 @@
 
 I installed microk8s in a MacBook Pro M3 Pro with 36GB, running Sonoma 14.5
 
+#### Note
+Kibana might fail if the elastic username and password is wrong. use the get_username.sh to get the password from the secret. 
 
 1. microk8s installed in MacOS with the following spec:
 ```
