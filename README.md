@@ -2,8 +2,17 @@
 
 I installed microk8s in a MacBook Pro M3 Pro with 36GB, running Sonoma 14.5
 
-#### Note
-Kibana might fail if the elastic username and password is wrong. use the get_username.sh to get the password from the secret. 
+#### Note for Kibana
+- Kibana might fail if the elastic username and password is wrong. use the get_username.sh to get the password from the secret.
+#### Note for Elasticsearch
+- Anonymous is enabled in Elasticsearch with a role as admin. You'll find this in the 1-es-deploy.yaml (NOT RECOMMENDED)
+- ```elastic.yaml, kibana.yaml, enterpriseserach.yaml``` are now part of CustomResourceDefinition (CRD) in Kubernetes. You don't need to look anywhere anymore :)
+#### Notes for the FQDN
+- In case you wonder how the frontend is served, it is done via the NGINX proxy now.
+- It is configued to allow more than 100MB of data by using annotations that is defined by the NGINX manual.
+#### Note for the certificates
+- You will have to generate a self-signed certificate, make sure you don't lose this. 
+  
 
 1. microk8s installed in MacOS with the following spec:
 ```
