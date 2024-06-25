@@ -56,3 +56,11 @@ addons:
 7. create an elastic-system namespace ```microk8s kubectl create ns elastic-system```
 8. apply the numbered yaml one by one in order. Except for the shell file that you will have to run in the bash prompt
     ```microk8s kubectl -n elastic-system apply -f 1-es-deploy.yaml```
+
+
+#### Kubernetes dashboard.
+To activate the dashboard simply run:
+
+```microk8s dashboard-proxy``` and follow the instructions. It should lead you to the basic Kubernetes dashboard. 
+
+   ![Dashboard](https://raw.githubusercontent.com/peowpeowbangbang/eck-microk8s/main/artefacts/dashboard.png)
